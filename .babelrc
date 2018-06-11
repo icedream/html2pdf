@@ -9,6 +9,7 @@
   ],
   "plugins": [
     "external-helpers",
+    "transform-proto-to-assign",
     "transform-object-assign"
   ]
 }
