@@ -34,7 +34,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
 
+var defaults = function (obj, defaults) {
+  var keys = Object.getOwnPropertyNames(defaults);
 
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var value = Object.getOwnPropertyDescriptor(defaults, key);
+
+    if (value && value.configurable && obj[key] === undefined) {
+      Object.defineProperty(obj, key, value);
+    }
+  }
+
+  return obj;
+};
 
 
 
@@ -135,7 +148,8 @@ Worker.prototype.constructor = Worker;
 // Converts/casts promises into Workers.
 Worker.convert = function convert(promise, inherit) {
   // Uses prototypal inheritance to receive changes made to ancestors' properties.
-  promise.__proto__ = inherit || Worker.prototype;
+  defaults(promise, inherit || Worker.prototype);
+
   return promise;
 };
 
